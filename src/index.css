@@ -1,0 +1,261 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', sans-serif;
+  }
+}
+
+/* ========================================================
+   FUTURISTIC 3D FITNESS & SCIENCE EDUCATION DESIGN SYSTEM
+   Featuring 3D perspective layers, glass-morphic depth,
+   isometric hover elevations, and dynamic specular reflections.
+   ======================================================== */
+
+/* Root 3D Perspective Context */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 3D Glass Layering Utility with high contrast for both modes */
+.glass-panel-3d {
+  background: rgba(12, 20, 39, 0.78);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.12);
+  color: #f1f5f9;
+}
+
+.light .glass-panel-3d {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(203, 213, 225, 0.85);
+  box-shadow: 0 15px 35px -8px rgba(15, 23, 42, 0.08), 0 2px 8px rgba(15, 23, 42, 0.04), inset 0 1px 1px rgba(255, 255, 255, 1);
+  color: #0f172a;
+}
+
+/* 3D Elevated Interactive Cards */
+.card-elevation-3d {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
+  transform: translateZ(0);
+}
+
+.card-elevation-3d:hover {
+  transform: translateY(-8px) scale(1.012) rotateX(2deg);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 35px rgba(37, 117, 220, 0.2);
+}
+
+.light .card-elevation-3d:hover {
+  transform: translateY(-8px) scale(1.012) rotateX(2deg);
+  box-shadow: 0 22px 42px -10px rgba(15, 23, 42, 0.12), 0 0 25px rgba(37, 117, 220, 0.12);
+}
+
+/* 3D Button Depth with Tactile Extrusion */
+.btn-3d-red {
+  background: linear-gradient(135deg, #ef3838 0%, #dc2626 60%, #b91c1c 100%);
+  box-shadow: 0 10px 25px -4px rgba(239, 56, 56, 0.45), 0 4px 0 #991b1b, inset 0 1px 1px rgba(255, 255, 255, 0.35);
+  transition: all 0.15s ease-out;
+  color: #ffffff !important;
+}
+.btn-3d-red:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px -4px rgba(239, 56, 56, 0.55), 0 5px 0 #991b1b, inset 0 1px 1px rgba(255, 255, 255, 0.45);
+  color: #ffffff !important;
+}
+.btn-3d-red:active {
+  transform: translateY(2px);
+  box-shadow: 0 4px 10px rgba(239, 56, 56, 0.35), 0 1px 0 #991b1b;
+  color: #ffffff !important;
+}
+
+.btn-3d-blue {
+  background: linear-gradient(135deg, #2575dc 0%, #1d63bf 60%, #154c94 100%);
+  box-shadow: 0 10px 25px -4px rgba(37, 117, 220, 0.45), 0 4px 0 #103b75, inset 0 1px 1px rgba(255, 255, 255, 0.35);
+  transition: all 0.15s ease-out;
+  color: #ffffff !important;
+}
+.btn-3d-blue:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px -4px rgba(37, 117, 220, 0.55), 0 5px 0 #103b75, inset 0 1px 1px rgba(255, 255, 255, 0.45);
+  color: #ffffff !important;
+}
+.btn-3d-blue:active {
+  transform: translateY(2px);
+  box-shadow: 0 4px 10px rgba(37, 117, 220, 0.35), 0 1px 0 #103b75;
+  color: #ffffff !important;
+}
+
+/* ========================================================
+   LIGHT & DARK MODE TEXT COLOR COMBINATIONS (Maximum Contrast)
+   ======================================================== */
+
+.dark body {
+  background-color: #060a14;
+  color: #f1f5f9;
+}
+
+.light body {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+/* Headings in Light Mode */
+.light h1, .light h2, .light h3, .light h4, .light h5, .light h6 {
+  color: #0f172a !important;
+}
+.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+  color: #ffffff;
+}
+
+/* Headings with explicit gradient overrides should keep transparent text */
+.light h1 .bg-clip-text, .light h2 .bg-clip-text, .light h3 .bg-clip-text {
+  color: transparent !important;
+}
+
+/* Paragraphs & Subtitles in Light Mode */
+.light p {
+  color: #334155;
+}
+.dark p {
+  color: #cbd5e1;
+}
+
+/* High Contrast Adaptations for Light Mode UI */
+.light .text-white:not(.btn-3d-red):not(.btn-3d-blue):not(.badge-white):not(.keep-white) {
+  color: #0f172a !important;
+}
+
+.light .text-slate-100 {
+  color: #0f172a !important;
+}
+
+.light .text-slate-200 {
+  color: #1e293b !important;
+}
+
+.light .text-slate-300 {
+  color: #334155 !important;
+}
+
+.light .text-slate-400 {
+  color: #475569 !important;
+}
+
+.light .text-slate-500 {
+  color: #64748b !important;
+}
+
+.light .text-blue-300 {
+  color: #1d4ed8 !important;
+}
+
+.light .text-blue-400 {
+  color: #1e40af !important;
+}
+
+.light .text-red-300, .light .text-red-400 {
+  color: #b91c1c !important;
+}
+
+/* High Contrast Wells, Containers & Badges in Light Mode */
+.light .bg-slate-950,
+.light .bg-slate-950\/70,
+.light .bg-slate-950\/80,
+.light .bg-slate-950\/90,
+.light .bg-slate-900,
+.light .bg-slate-900\/60,
+.light .bg-slate-900\/80,
+.light .bg-slate-900\/90 {
+  background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+.light .bg-blue-950,
+.light .bg-blue-950\/40,
+.light .bg-blue-950\/70,
+.light .bg-blue-950\/80,
+.light .bg-blue-950\/90 {
+  background-color: #dbeafe !important;
+  border-color: #93c5fd !important;
+  color: #1e40af !important;
+}
+
+.light .bg-red-950,
+.light .bg-red-950\/40,
+.light .bg-red-950\/80 {
+  background-color: #fee2e2 !important;
+  border-color: #fca5a5 !important;
+  color: #991b1b !important;
+}
+
+.light .bg-emerald-950,
+.light .bg-emerald-950\/70,
+.light .bg-emerald-950\/80 {
+  background-color: #d1fae5 !important;
+  border-color: #6ee7b7 !important;
+  color: #065f46 !important;
+}
+
+.light .border-slate-800,
+.light .border-slate-800\/60,
+.light .border-slate-800\/80,
+.light .border-slate-700,
+.light .border-slate-700\/80 {
+  border-color: #e2e8f0 !important;
+}
+
+/* Form Inputs in Light Mode */
+.light input, .light select, .light textarea {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+.light input::placeholder, .light textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Modals & Dialogs in Light Mode */
+.light .bg-\[\#090f1d\],
+.light .bg-\[\#0b1120\],
+.light .bg-\[\#090e1c\] {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+}
+
+/* Animated Biomechanical Energy Lines */
+@keyframes energy-flow {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.energy-line-vertical {
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, rgba(239, 56, 56, 0.8), rgba(37, 117, 220, 0.8), transparent);
+  animation: energy-flow 4s ease-in-out infinite;
+}
+
+/* Custom 3D Sci-Fi Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #060a14;
+}
+.light ::-webkit-scrollbar-track {
+  background: #e2e8f1;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #ef3838, #2575dc);
+  border-radius: 4px;
+}
