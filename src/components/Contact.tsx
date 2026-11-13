@@ -6,10 +6,13 @@ import {
   Send, 
   CheckCircle2, 
   Building, 
-  PhoneCall
+  PhoneCall,
+  CreditCard,
+  ShieldCheck,
+  AlertCircle,
+  Loader2
 } from 'lucide-react';
 import { AnimateOnScroll } from './AnimateOnScroll';
-import { EmiCalculator } from './EmiCalculator';
 import { Card3D } from './Card3D';
 
 interface ContactProps {
@@ -28,6 +31,10 @@ export const Contact: React.FC<ContactProps> = ({ selectedProgram }) => {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Deployed Google Apps Script Web App for Tab 1: Counseling Leads
+  const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxW-8xyLDVZlFZUChkH283jHChl6GgSoJgJkD3CgXV8HUMMKgq7MZJmMhIBJbrpcZG9/exec';
 
   // Sync if selectedProgram changes from props
   React.useEffect(() => {
@@ -36,9 +43,35 @@ export const Contact: React.FC<ContactProps> = ({ selectedProgram }) => {
     }
   }, [selectedProgram]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setIsSubmitting(true);
+
+    try {
+      if (GOOGLE_APPS_SCRIPT_URL) {
+        await fetch(GOOGLE_APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            phone: formData.phone,
+            email: formData.email,
+            program: formData.program,
+            mode: formData.mode,
+            center: formData.center,
+            message: formData.message
+          })
+        });
+      }
+    } catch (err) {
+      console.warn('Form submission error:', err);
+    } finally {
+      setIsSubmitting(false);
+      setSubmitted(true);
+    }
   };
 
   const campuses = [
@@ -230,10 +263,20 @@ export const Contact: React.FC<ContactProps> = ({ selectedProgram }) => {
 
                   <button
                     type="submit"
-                    className="btn-3d-red w-full py-4 rounded-2xl text-sm font-black text-white flex items-center justify-center gap-2 tracking-wide shadow-lg"
+                    disabled={isSubmitting}
+                    className="btn-3d-red w-full py-4 rounded-2xl text-sm font-black text-white flex items-center justify-center gap-2 tracking-wide shadow-lg disabled:opacity-75 disabled:cursor-not-allowed"
                   >
-                    <Send className="w-4 h-4 text-white" />
-                    <span>Submit Application / Request Academic Call</span>
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 text-white animate-spin" />
+                        <span>Logging Inquiry with Admissions Desk...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4 text-white" />
+                        <span>Submit Application / Request Academic Call</span>
+                      </>
+                    )}
                   </button>
 
                   <div className="text-[11px] text-slate-400 text-center flex items-center justify-center gap-2 pt-1">
@@ -315,9 +358,105 @@ export const Contact: React.FC<ContactProps> = ({ selectedProgram }) => {
 
         </div>
 
-        {/* Flexible Tuition & EMI Calculator */}
-        <AnimateOnScroll animation="fly-in-up" delay={200}>
-          <EmiCalculator />
+        {/* Flexible Student Installment Policy */}
+        <AnimateOnScroll animation="fly-in-up" delay={200} className="mt-16">
+          <Card3D glowColor="dual" intensity={10} depth={20} className="rounded-3xl glass-panel-3d p-8 sm:p-12 shadow-2xl relative overflow-hidden border border-slate-800">
+            {/* Background glowing ambient element */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-red-500/5 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/5 rounded-full blur-[100px] pointer-events-none" />
+
+            <div className="relative z-10">
+              {/* Header */}
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-6 mb-8">
+                <div>
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/70 border border-blue-800/60 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
+                    <CreditCard className="w-3.5 h-3.5 text-[#ef3838]" />
+                    FLEXIBLE TUITION & ADMISSION POLICY
+                  </div>
+                  <h3 className="text-2xl sm:text-3xl font-black text-white font-heading">
+                    Flexible Student Installment Plan
+                  </h3>
+                  <p className="text-sm text-slate-300 mt-1 max-w-2xl font-normal">
+                    We believe financial constraints should never stand in the way of high-quality fitness education. SRE provides structured, interest-free installment options directly from the academy.
+                  </p>
+                </div>
+
+                <div className="shrink-0 flex items-center gap-2 bg-slate-900/90 border border-slate-700/80 px-4 py-2.5 rounded-2xl">
+                  <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" />
+                  <div className="text-left">
+                    <div className="text-[11px] text-slate-400 font-semibold uppercase">Payment Mode</div>
+                    <div className="text-xs font-bold text-white">Direct Academy Installments</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 3 Steps Installment Flow */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                
+                {/* Step 1 */}
+                <div className="p-6 rounded-2xl bg-slate-950/70 border border-slate-800/80 hover:border-red-500/40 transition-all group">
+                  <div className="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/30 text-[#ef3838] flex items-center justify-center font-black text-sm mb-4 group-hover:scale-105 transition-transform">
+                    01
+                  </div>
+                  <h4 className="text-lg font-bold text-white mb-2 font-heading">
+                    Initial Token Admission Fee
+                  </h4>
+                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    Pay only a small nominal token amount of the total course fee at the time of enrollment to lock in your seat, allocate batch slots, and receive immediate LMS & study portal access.
+                  </p>
+                </div>
+
+                {/* Step 2 */}
+                <div className="p-6 rounded-2xl bg-slate-950/70 border border-slate-800/80 hover:border-blue-500/40 transition-all group">
+                  <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/30 text-[#2575dc] flex items-center justify-center font-black text-sm mb-4 group-hover:scale-105 transition-transform">
+                    02
+                  </div>
+                  <h4 className="text-lg font-bold text-white mb-2 font-heading">
+                    3 to 5 Flexible Installments
+                  </h4>
+                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    Distribute the remaining balance across <strong>3 to 5 convenient monthly installments</strong> over a period of <strong>3 to 4 months</strong> with zero interest or third-party bank loan burden.
+                  </p>
+                </div>
+
+                {/* Step 3 */}
+                <div className="p-6 rounded-2xl bg-slate-950/70 border border-slate-800/80 hover:border-amber-500/40 transition-all group">
+                  <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center font-black text-sm mb-4 group-hover:scale-105 transition-transform">
+                    03
+                  </div>
+                  <h4 className="text-lg font-bold text-white mb-2 font-heading">
+                    Clearance Before Certification
+                  </h4>
+                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    All tuition dues and installment balances <strong>must be 100% cleared</strong> prior to the final examination assessment and official certificate dispatch.
+                  </p>
+                </div>
+
+              </div>
+
+              {/* Mandatory Notice & Counselor Contact Box */}
+              <div className="p-5 rounded-2xl bg-red-950/20 border border-red-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="flex items-start gap-3">
+                  <AlertCircle className="w-5 h-5 text-[#ef3838] shrink-0 mt-0.5" />
+                  <div className="text-xs text-slate-300">
+                    <strong className="text-white">Academy Policy Notice:</strong> Practical examination scheduling and issuance of the accredited diploma/certificate requires complete fee clearance without exception. Custom installment dates can be arranged upon request.
+                  </div>
+                </div>
+
+                <a
+                  href="#contact-form"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById('name')?.focus();
+                  }}
+                  className="btn-3d-red px-5 py-2.5 rounded-xl text-xs font-bold text-white whitespace-nowrap shrink-0 shadow-md"
+                >
+                  Request Installment Plan
+                </a>
+              </div>
+
+            </div>
+          </Card3D>
         </AnimateOnScroll>
 
       </div>

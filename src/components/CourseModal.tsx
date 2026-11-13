@@ -24,7 +24,7 @@ export const CourseModal: React.FC<CourseModalProps> = ({ course, onClose, onEnr
               {course.badge}
             </span>
             <h3 className="text-2xl font-bold text-white font-heading">{course.title}</h3>
-            <p className="text-xs text-slate-400 mt-1">Accredited Professional Diploma Program | {course.credits}</p>
+            <p className="text-xs text-slate-400 mt-1">Professional Fitness Education | SRE Academy</p>
           </div>
           <button
             onClick={onClose}
@@ -54,14 +54,14 @@ export const CourseModal: React.FC<CourseModalProps> = ({ course, onClose, onEnr
 
             <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
               <div className="text-slate-400 text-xs flex items-center gap-1.5 mb-1">
-                <Award className="w-3.5 h-3.5 text-[#ef3838]" /> Level
+                <Award className="w-3.5 h-3.5 text-[#ef3838]" /> Assessment
               </div>
-              <div className="font-semibold text-white text-xs sm:text-sm">{course.level}</div>
+              <div className="font-semibold text-white text-xs sm:text-sm">{course.assessment}</div>
             </div>
 
             <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
               <div className="text-slate-400 text-xs flex items-center gap-1.5 mb-1">
-                <CreditCard className="w-3.5 h-3.5 text-[#2575dc]" /> Tuition Fee
+                <CreditCard className="w-3.5 h-3.5 text-[#2575dc]" /> Program Info
               </div>
               <div className="font-bold text-[#ef3838] text-xs sm:text-sm">{course.price}</div>
             </div>
@@ -103,10 +103,10 @@ export const CourseModal: React.FC<CourseModalProps> = ({ course, onClose, onEnr
 
             <div className="p-4 rounded-xl bg-slate-950 border border-slate-800">
               <h5 className="font-bold text-white text-xs uppercase tracking-wider mb-2 text-[#2575dc]">
-                Career Outcomes & Certification
+                Learning Outcomes & Competencies
               </h5>
               <ul className="space-y-1.5">
-                {course.outcomes.map((outcome, idx) => (
+                {course.outcomes?.map((outcome, idx) => (
                   <li key={idx} className="flex items-start gap-2 text-xs text-slate-300">
                     <CheckCircle2 className="w-3.5 h-3.5 text-blue-400 shrink-0 mt-0.5" />
                     <span>{outcome}</span>
@@ -120,7 +120,9 @@ export const CourseModal: React.FC<CourseModalProps> = ({ course, onClose, onEnr
         {/* Modal Footer */}
         <div className="p-5 bg-slate-900 border-t border-slate-800 flex flex-wrap justify-between items-center gap-4">
           <div>
-            <div className="text-xs text-slate-400">Tuition Fee with flexible installment:</div>
+            <div className="text-xs text-slate-400">
+              {course.status === 'active' ? 'Tuition Fee with flexible installment:' : 'Course Status & Admissions:'}
+            </div>
             <div className="text-xl font-extrabold text-white">
               {course.price} <span className="text-xs font-normal text-slate-400">({course.emi})</span>
             </div>
@@ -136,11 +138,11 @@ export const CourseModal: React.FC<CourseModalProps> = ({ course, onClose, onEnr
             <button
               onClick={() => {
                 onClose();
-                onEnroll(course.title);
+                onEnroll(course.status === 'active' ? course.title : `${course.title} (Pre-Registration Inquiry)`);
               }}
               className="px-6 py-2.5 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-[#ef3838] to-[#2575dc] hover:from-red-600 hover:to-blue-600 shadow-lg shadow-red-500/25 transition-all flex items-center gap-1.5"
             >
-              <span>Apply for this Program</span>
+              <span>{course.status === 'active' ? 'Enroll in this Course' : 'Pre-Register for Next Batch'}</span>
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>

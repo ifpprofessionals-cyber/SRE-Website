@@ -17,57 +17,60 @@ export const About: React.FC = () => {
   const pillars = [
     {
       icon: <Microscope className="w-7 h-7 text-[#ef3838]" />,
-      title: "Scientific Empiricism Over Bro-Science",
-      description: "Every movement cue, nutrition guideline, and periodization scheme taught at SRE is substantiated by peer-reviewed kinesiology and exercise physiology research, rejecting anecdotal gym hearsay."
+      title: "Evidence-Based Fitness Education",
+      description: "Understand the scientific principles behind exercise, training adaptation, recovery, and performance. Learn to question unsupported claims and make informed decisions using credible evidence."
     },
     {
       icon: <Dna className="w-7 h-7 text-[#2575dc]" />,
-      title: "Individual Anthropometry & Biomechanics",
-      description: "Human skeletons differ across femur lengths, hip socket depths, and ribcage structures. We train coaches to customize lifts to client anatomy rather than forcing rigid, injury-prone archetypes."
+      title: "Individualized Training Principles",
+      description: "Explore how anatomy, movement patterns, training history, goals, and individual differences influence exercise selection and program design."
     },
     {
       icon: <Activity className="w-7 h-7 text-[#ef3838]" />,
-      title: "Clinical Scope & Medical Collaboration",
-      description: "We instill disciplined ethical boundaries, teaching coaches when to optimize performance and when to refer to orthopedic surgeons, physical therapists, and registered dietitians."
+      title: "Safe and Responsible Coaching",
+      description: "Learn the importance of exercise safety, appropriate progressions, informed coaching decisions, and professional boundaries, including when to refer clients to qualified healthcare practitioners."
     },
     {
       icon: <Building2 className="w-7 h-7 text-[#2575dc]" />,
-      title: "Rigorous Practical Lab Examination",
-      description: "Graduation requires passing blind client simulation examinations, live spot-testing on human biomechanical faults, and stringent CPR/AED life support assessments."
+      title: "Practical Skills & Application",
+      description: "Connect theoretical knowledge with practical fitness scenarios. Develop a stronger understanding of exercise technique, movement assessment, training methods, and coaching communication."
     }
   ];
 
   const teamMembers = [
     {
-      name: "Dr. Rajiv Vardhan, Ph.D.",
-      role: "DEAN OF KINESIOLOGY & ACADEMIC DIRECTOR",
-      creds: "Ex-National Sports Institute Advisor | 22+ Years in Exercise Physiology",
+      name: "Dr. Rajiv Vardhan",
+      role: "FITNESS SCIENCE & EDUCATION",
+      qualification: "Ph.D., Exercise Physiology",
+      description: "Supports learners in developing a strong understanding of exercise science, training principles, and evidence-informed fitness practice.",
       badgeColor: "text-[#ef3838]",
       image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=600&q=80"
     },
     {
-      name: "Maithili Kulkarni, CSCS*D",
-      role: "HEAD OF STRENGTH & CONDITIONING PRACTICAL LABS",
-      creds: "International Weightlifting Federation Certified | 14+ Years Coaching",
+      name: "Maithili Kulkarni",
+      role: "STRENGTH & CONDITIONING",
+      qualification: "CSCS | Strength & Conditioning Coach",
+      description: "Helps learners understand strength development, exercise programming, movement quality, and the principles of athletic performance.",
       badgeColor: "text-[#2575dc]",
       image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80"
     },
     {
-      name: "Dr. Rohan Mehta, MBBS, DNB",
-      role: "CHAIRPERSON, SPORTS MEDICINE & REHABILITATION",
-      creds: "Clinical Sports Physician | Specialist in Spine & Musculoskeletal Rehab",
+      name: "Dr. Rohan Mehta",
+      role: "EXERCISE PHYSIOLOGY & PERFORMANCE",
+      qualification: "MBBS, Sports & Exercise Medicine",
+      description: "Contributes knowledge of human physiology, physical adaptation, and the relationship between training, recovery, and performance.",
       badgeColor: "text-[#ef3838]",
       image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=600&q=80"
     }
   ];
 
   const campusFeatures = [
-    "Dedicated 3D Motion Vector & Kinetic Analysis Lab",
-    "Olympic Lifting Platforms with Eleiko Precision Calibrated Plates",
-    "Metabolic Cart for VO2 Max & Gas Exchange Testing",
-    "DEXA & Hydrostatic Equivalent Body Composition Suites",
-    "High-Density Cadaveric & Anatomy Virtual Holographic Simulators",
-    "Pan-India Practical Examination Centres across 8 Metros"
+    "Exercise Biomechanics & Movement Analysis",
+    "Strength Training & Performance Principles",
+    "Exercise Physiology & Energy Systems",
+    "Fitness Assessment & Body Composition Fundamentals",
+    "Applied Human Anatomy & Kinesiology",
+    "Practical Learning & Professional Development"
   ];
 
   return (
@@ -85,10 +88,10 @@ export const About: React.FC = () => {
             Institutional Pedigree & Charter
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight font-heading drop-shadow-md">
-            Bridging Academic Science & Modern Fitness Practice
+            Bridging Exercise Science with Real-World Fitness Practice
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed font-normal">
-            Founded with the explicit mandate to elevate fitness instruction into an accredited, medical-grade discipline. We empower future coaches with verifiable scientific literacy, clinical safety, and leadership stature.
+            SRE Fitness Academy is dedicated to advancing fitness education through scientific understanding, practical learning, and professional development. We help aspiring and practicing fitness professionals build the knowledge, critical thinking, and coaching skills needed to apply exercise science responsibly.
           </p>
         </AnimateOnScroll>
 
@@ -99,13 +102,13 @@ export const About: React.FC = () => {
               <Target className="w-8 h-8" />
             </div>
             <h3 className="text-2xl sm:text-3xl font-extrabold text-white font-heading">
-              Why Premier Fitness Clubs & Sports Teams Hire SRE Alumni
+              Why Fitness Professionals Choose SRE Fitness Academy
             </h3>
             <p className="text-slate-300 leading-relaxed text-sm sm:text-base">
-              The fitness industry has long been plagued by unregulated certifications, weekend workshops, and unverified coaching claims. SRE Fitness Academy was established to set an uncompromising gold standard.
+              The fitness industry requires more than practical experience alone. Effective professionals need a strong understanding of human movement, exercise physiology, training methodology, and the principles that guide safe and effective coaching.
             </p>
             <p className="text-slate-400 leading-relaxed text-sm sm:text-base">
-              Our graduates do not simply count repetitions; they assess neuromuscular activation patterns, calculate joint shear forces, audit metabolic fuel utilization, and build individualized periodized plans that withstand scientific scrutiny.
+              At SRE Fitness Academy, we focus on connecting scientific knowledge with practical application. Our learning approach encourages students to think critically, understand individual differences, and develop the skills needed to make informed training decisions.
             </p>
 
             <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3.5">
@@ -127,43 +130,43 @@ export const About: React.FC = () => {
                     <Award className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="font-black text-white text-base font-heading">ACADEMIC CHARTER</h4>
-                    <p className="text-xs text-slate-400">Sports Science & Biomechanics Institute</p>
+                    <h4 className="font-black text-white text-base font-heading">SRE LEARNING FRAMEWORK</h4>
+                    <p className="text-xs text-slate-400">Science-Based Fitness Education</p>
                   </div>
                 </div>
                 <span className="text-xs font-mono bg-slate-900 text-blue-300 px-3.5 py-1.5 rounded-full border border-slate-700 shadow-sm">
-                  Reg No. SRE-EDU-2016
+                  COURSE INFORMATION
                 </span>
               </div>
 
               <div className="py-6 space-y-4">
                 <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800/80 flex justify-between items-center shadow-inner">
                   <div>
-                    <div className="text-sm font-bold text-white">Curriculum Review Cycle</div>
-                    <div className="text-xs text-slate-400">Audited annually against ACSM, NSCA & ISSN guidelines</div>
+                    <div className="text-sm font-bold text-white">Structured Curriculum</div>
+                    <div className="text-xs text-slate-400">Evidence-informed syllabus aligned with fitness science</div>
                   </div>
-                  <span className="text-xs font-black text-[#2575dc] uppercase tracking-wider">Continuous</span>
+                  <span className="text-xs font-black text-[#2575dc] uppercase tracking-wider">PROGRAM-BASED</span>
                 </div>
 
                 <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800/80 flex justify-between items-center shadow-inner">
                   <div>
-                    <div className="text-sm font-bold text-white">Minimum Practical Requirement</div>
-                    <div className="text-xs text-slate-400">Mandatory physical biomechanics floor lab hours</div>
+                    <div className="text-sm font-bold text-white">Practical Learning</div>
+                    <div className="text-xs text-slate-400">Hands-on application and coaching methodology</div>
                   </div>
-                  <span className="text-xs font-black text-[#ef3838] uppercase tracking-wider">160+ Hours</span>
+                  <span className="text-xs font-black text-[#ef3838] uppercase tracking-wider">AS PER COURSE</span>
                 </div>
 
                 <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800/80 flex justify-between items-center shadow-inner">
                   <div>
-                    <div className="text-sm font-bold text-white">Examination Passing Benchmark</div>
-                    <div className="text-xs text-slate-400">Rigorous double-blind theoretical + practical viva</div>
+                    <div className="text-sm font-bold text-white">Learning Assessment</div>
+                    <div className="text-xs text-slate-400">Comprehensive evaluation of knowledge and skills</div>
                   </div>
-                  <span className="text-xs font-black text-[#2575dc] uppercase tracking-wider">75% Minimum</span>
+                  <span className="text-xs font-black text-[#2575dc] uppercase tracking-wider">COURSE REQUIREMENTS</span>
                 </div>
               </div>
 
-              <div className="pt-2 text-center text-xs text-slate-400 italic">
-                “Producing practitioners whose knowledge stands resilient under clinical peer review.”
+              <div className="pt-2 text-center text-xs text-slate-400 leading-relaxed">
+                Our educational approach emphasizes scientific understanding, practical application, and the continuous development of professional knowledge.
               </div>
             </Card3D>
           </AnimateOnScroll>
@@ -175,7 +178,7 @@ export const About: React.FC = () => {
             <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white font-heading">
               Our 4 Pillars of Pedagogical Excellence
             </h3>
-            <p className="text-sm text-slate-400 mt-2">The four bedrock principles governing every SRE certification</p>
+            <p className="text-sm text-slate-400 mt-2">Four principles that guide our approach to science-led fitness education.</p>
           </AnimateOnScroll>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -198,13 +201,13 @@ export const About: React.FC = () => {
           <AnimateOnScroll animation="fly-in-up" className="text-center mb-14">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel-3d text-blue-300 text-xs font-bold mb-3 shadow-sm">
               <Users className="w-4 h-4 text-[#ef3838]" />
-              The Team • Academic Advisory Board
+              MEET OUR EDUCATORS
             </div>
             <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white font-heading">
-              Mentored by Sports Scientists & Medical Practitioners
+              Learn from Experienced Fitness & Sports Science Educators
             </h3>
             <p className="text-sm sm:text-base text-slate-300 mt-2 max-w-2xl mx-auto">
-              Learn directly from doctors, published sports researchers, and master strength coaches who define the academic standard at SRE.
+              Discover the people who contribute to fitness education through scientific knowledge, practical experience, and a commitment to helping learners grow as informed professionals.
             </p>
           </AnimateOnScroll>
 
@@ -226,7 +229,8 @@ export const About: React.FC = () => {
                         {member.role}
                       </span>
                       <h4 className="text-xl font-black text-white font-heading">{member.name}</h4>
-                      <p className="text-xs text-slate-300 mt-2 leading-relaxed font-medium">{member.creds}</p>
+                      <div className="text-xs font-semibold text-blue-400 mt-1">{member.qualification}</div>
+                      <p className="text-xs text-slate-300 mt-2.5 leading-relaxed font-normal">{member.description}</p>
                     </div>
                   </div>
                 </Card3D>

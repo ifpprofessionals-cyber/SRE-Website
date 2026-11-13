@@ -10,8 +10,68 @@ export interface ResourceItem {
   fileSize?: string;
 }
 
-// Master list of resources. You can add new items or remove items right here!
-// Each item will automatically show on the website with a direct one-click download.
+// Published CSV URL for Tab 3: Free Resources
+export const RESOURCES_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT917BT4WdBz-xtQCNg2Tu4_SQqVv6w0KFFSzg3A-R2yYtPIzG-t4JoOqjwr9kl3TKFD8lOCAr0S0iS/pub?gid=404819229&single=true&output=csv';
+
+export function parseResourcesCSV(csvText: string): ResourceItem[] {
+  const lines = csvText.split(/\r?\n/).filter(line => line.trim().length > 0);
+  if (lines.length <= 1) return [];
+
+  const headers = parseCSVLine(lines[0]).map(h => h.trim().toLowerCase());
+  const resources: ResourceItem[] = [];
+
+  for (let i = 1; i < lines.length; i++) {
+    const row = parseCSVLine(lines[i]);
+    if (row.length === 0 || !row[0]) continue;
+
+    const rowObj: Record<string, string> = {};
+    headers.forEach((header, index) => {
+      rowObj[header] = row[index] || '';
+    });
+
+    const title = rowObj['title'] || '';
+    if (!title) continue;
+
+    resources.push({
+      id: `res-live-${i}`,
+      title: title,
+      category: 'Kinesiology Journal',
+      author: rowObj['author'] || 'SRE Faculty & Practical Lab',
+      pages: 'Academic Resource PDF',
+      downloads: rowObj['downloads count'] || rowObj['downloads'] || '1,200+ Downloads',
+      fileSize: rowObj['file size'] || 'PDF Document',
+      fileUrl: rowObj['download url'] || rowObj['downloadurl'] || '/resources/squat-biomechanics-whitepaper.pdf',
+      desc: rowObj['description'] || 'Official educational resource publication from SRE Fitness Academy.'
+    });
+  }
+
+  return resources;
+}
+
+function parseCSVLine(line: string): string[] {
+  const result: string[] = [];
+  let current = '';
+  let inQuotes = false;
+
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+    if (char === '"') {
+      if (inQuotes && line[i + 1] === '"') {
+        current += '"';
+        i++;
+      } else {
+        inQuotes = !inQuotes;
+      }
+    } else if (char === ',' && !inQuotes) {
+      result.push(current.trim());
+      current = '';
+    } else {
+      current += char;
+    }
+  }
+  result.push(current.trim());
+  return result;
+}
 export const FREE_RESOURCES: ResourceItem[] = [
   {
     id: 'res-squat-biomechanics',

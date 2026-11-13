@@ -6,7 +6,6 @@ import { Credibility } from './components/Credibility';
 import { Courses } from './components/Courses';
 import { Testimonials } from './components/Testimonials';
 import { VirtualTour } from './components/VirtualTour';
-import { JobBoardTeaser } from './components/JobBoardTeaser';
 import { TrainerVerification } from './components/TrainerVerification';
 import { Resources } from './components/Resources';
 import { Contact } from './components/Contact';
@@ -65,13 +64,10 @@ const MainLayout: React.FC = () => {
         {/* 7. Verify Trainer (Audit Registry) */}
         <TrainerVerification />
 
-        {/* 8. Exclusive Alumni Job Board & Hiring Openings */}
-        <JobBoardTeaser />
-
-        {/* 9. Academic Resources & Diagnostic Tools Suite */}
+        {/* 8. Academic Resources & Diagnostic Tools Suite */}
         <Resources />
 
-        {/* 10. Admissions, EMI Installment Calculator & Contact */}
+        {/* 9. Admissions, EMI Installment Calculator & Contact */}
         <Contact selectedProgram={selectedProgramForAdmission} />
       </main>
 

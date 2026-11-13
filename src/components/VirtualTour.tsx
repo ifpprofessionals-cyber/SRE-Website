@@ -1,21 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
-  Eye, 
   MapPin, 
-  CheckCircle2,
-  Compass
+  CheckCircle2, 
+  Compass, 
+  ChevronLeft, 
+  ChevronRight, 
+  Play, 
+  Pause, 
+  Sparkles,
+  Layers
 } from 'lucide-react';
 import { AnimateOnScroll } from './AnimateOnScroll';
 import { Card3D } from './Card3D';
 
 interface TourStation {
   id: string;
+  tabLabel: string;
+  badgeLabel: string;
   title: string;
   category: string;
   description: string;
   features: string[];
   specs: string;
   image: string;
+  relevantCourses: string;
   hotspots: { title: string; desc: string; top: string; left: string }[];
 }
 
@@ -23,133 +31,194 @@ export const VirtualTour: React.FC = () => {
   const stations: TourStation[] = [
     {
       id: 'motion-lab',
-      title: '3D Kinetic Vector & Motion Capture Suite',
-      category: 'Biomechanics Research Lab',
-      description: 'Equipped with multi-axis synchronized optical high-speed cameras, dual force plates, and real-time skeletal tracking algorithms to calculate exact moment arms and joint compressive shear.',
+      tabLabel: 'Biomechanics & Movement Analysis',
+      badgeLabel: 'PRACTICAL LAB 01 • BIOMECHANICS & MOVEMENT',
+      title: 'Understanding Human Movement & Exercise Technique',
+      category: 'Biomechanics & Movement Analysis',
+      description: 'Discover how joint mechanics, muscle actions, movement patterns, and external forces influence exercise technique and physical performance. Learn how biomechanical principles can help fitness professionals assess movement, understand loading strategies, and make informed exercise-programming decisions.',
       features: [
-        'Vicon Multi-Camera Motion Capture System',
-        'Dual Bertec Force Plates (1,000 Hz sample rate)',
-        'Wireless Surface Electromyography (sEMG)',
-        'Instant Bar Velocity & Path Vector Projection'
+        'Functional Anatomy & Joint Mechanics Analysis',
+        'Kinetic Chains & Movement Pattern Optimization',
+        'Resistance Training Biomechanics & Lever Systems',
+        'Video Motion Observation & Technique Breakdown'
       ],
-      specs: 'Lab Area: 1,800 Sq. Ft. • Metro Testing Hubs',
+      specs: 'Focus: Movement Mechanics & Exercise Form',
       image: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=1200&q=80',
+      relevantCourses: 'Personal Training (CPT) & Biomechanics',
       hotspots: [
-        { title: 'Optical Cameras', desc: 'Captures 240 frames/sec for joint angle analysis', top: '25%', left: '30%' },
-        { title: 'Dual Force Plates', desc: 'Measures ground reaction forces in X, Y, Z axes', top: '70%', left: '55%' },
-        { title: 'Real-time Vector HUD', desc: 'Displays lumbar shear loads during maximal lifts', top: '35%', left: '75%' }
+        { title: 'Joint Mechanics', desc: 'Analyzing joint angles, moment arms, and force vectors during movement', top: '25%', left: '30%' },
+        { title: 'Movement Patterns', desc: 'Assessing kinetic chains, posture, and multi-joint coordination', top: '70%', left: '55%' },
+        { title: 'Exercise Technique', desc: 'Applying biomechanical principles to optimize exercise form and safety', top: '35%', left: '75%' }
       ]
     },
     {
       id: 'olympic-hall',
-      title: 'Olympic Weightlifting & Powerlifting Platforms',
-      category: 'Practical Strength Floor',
-      description: 'Full competition Eleiko platforms with calibrated discs and friction-free stainless steel Olympic barbells designed for heavy eccentric velocity-based loading and dead-stop mechanics.',
+      tabLabel: 'Strength & Conditioning',
+      badgeLabel: 'PRACTICAL LAB 02 • STRENGTH & CONDITIONING',
+      title: 'Strength Training & Athletic Performance',
+      category: 'Strength & Conditioning',
+      description: 'Explore the principles behind effective strength training, power development, and athletic preparation. Understand exercise selection, loading, technique, progressive overload, and recovery, and learn how these factors contribute to structured training programs for different fitness and performance goals.',
       features: [
-        '8 Full-Size IWF Competition Wood Platforms',
-        'Eleiko Calibrated Steel Plates & Bars',
-        'Tendo Linear Position Transducers for VBT',
-        'Custom Heavy-Duty Monolifts & Half Racks'
+        'Olympic & Power Lifts Coaching Protocols',
+        'Strength, Velocity & Plyometric Progressions',
+        'Training Variables & Progressive Overload Architecture',
+        'Fatigue Management & Workload Periodization'
       ],
-      specs: 'Platform Capacity: 32 Athletes Simultaneously',
+      specs: 'Focus: Power, Strength & Progressive Overload',
       image: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1200&q=80',
+      relevantCourses: 'Strength & Conditioning & CPT',
       hotspots: [
-        { title: 'Eleiko Calibrated Discs', desc: 'Accuracy within +/- 10 grams of declared weight', top: '65%', left: '35%' },
-        { title: 'VBT Velocity Sensors', desc: 'Linear transducers for mean concentric speed', top: '45%', left: '70%' }
+        { title: 'Exercise Setup', desc: 'Establishing optimal positioning, stance, and mechanical alignment', top: '65%', left: '35%' },
+        { title: 'Loading Principles', desc: 'Managing resistance, velocity, and progressive overload strategies', top: '45%', left: '70%' }
       ]
     },
     {
       id: 'metabolic-cart',
-      title: 'Clinical Exercise Physiology & Cardiorespiratory Lab',
-      category: 'Cardiopulmonary Suite',
-      description: 'High-precision open-circuit spirometry and metabolic cart suites for assessing VO2 Max, ventilatory thresholds (VT1/VT2), respiratory exchange ratio (RER), and clinical blood lactate dynamics.',
+      tabLabel: 'Exercise Physiology',
+      badgeLabel: 'PRACTICAL LAB 03 • EXERCISE PHYSIOLOGY',
+      title: 'Exercise Physiology & Cardiovascular Fitness',
+      category: 'Exercise Physiology',
+      description: 'Understand how the cardiovascular, respiratory, and muscular systems respond to physical activity. Explore aerobic and anaerobic energy systems, exercise intensity, fatigue, recovery, and the physiological principles that guide fitness assessment and training-program design.',
       features: [
-        'Cosmed K5 Wearable Metabolic Cart',
-        'Lactate Scout Clinical Handheld Analyzers',
-        '12-Lead Diagnostic Resting & Stress ECG',
-        'Lode Excalibur Sport Electromagnetic Cycle Ergometer'
+        'Cardiovascular & Respiratory Dynamics During Exercise',
+        'Aerobic vs Anaerobic Threshold Testing Concepts',
+        'Heart Rate Zone Calibrations & Karvonen Formulas',
+        'Metabolic Conditioning & Active Recovery Design'
       ],
-      specs: 'Diagnostic Accuracy: Medical Grade CE-Certified',
+      specs: 'Focus: Cardiorespiratory Testing & Energy Systems',
       image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80',
+      relevantCourses: 'Sports Nutrition & Personal Training',
       hotspots: [
-        { title: 'Metabolic Mask', desc: 'Real-time breath-by-breath O2/CO2 gas exchange', top: '30%', left: '48%' },
-        { title: 'Lactate Diagnostic Station', desc: 'Capillary blood lactate curves at step intervals', top: '60%', left: '25%' }
+        { title: 'Cardiovascular Response', desc: 'Understanding heart rate, breathing dynamics, and physiological effort', top: '30%', left: '48%' },
+        { title: 'Energy Systems', desc: 'Exploring aerobic and anaerobic pathways and fatigue management', top: '60%', left: '25%' }
       ]
     },
     {
       id: 'body-comp',
-      title: 'DEXA & Multi-Frequency Bioimpedance Suite',
-      category: 'Anthropometry Diagnostics',
-      description: 'Gold-standard body composition testing suites providing clinical bone mineral density, visceral adipose tissue quantification, and segmented intra-cellular water hydration analysis.',
+      tabLabel: 'Body Composition & Assessment',
+      badgeLabel: 'PRACTICAL LAB 04 • ANTHROPOMETRIC ASSESSMENT',
+      title: 'Body Composition & Anthropometric Assessment',
+      category: 'Body Composition & Assessment',
+      description: 'Learn how anthropometric measurements and body-composition methods can contribute to fitness assessment and progress monitoring. Explore the principles, appropriate use, and limitations of common assessment techniques while understanding why measurements should always be interpreted in context.',
       features: [
-        'Dual-Energy X-Ray Absorptiometry (DEXA Equivalency)',
-        'InBody 770 Multi-Frequency Segmental BIA',
-        'Harpenden Precision Skinfold Calipers',
-        'Ultrasound Muscular Cross-Sectional Thickness Scanners'
+        'Skinfold Caliper & Multi-Site Anthropometric Measurement',
+        'Bioelectrical Impedance & Lean Mass Tracking',
+        'Measurement Reliability, Calibration & Client Baselines',
+        'Translating Metrics into Actionable Fitness Roadmaps'
       ],
-      specs: 'Scan Duration: Under 3 Minutes • High Precision',
+      specs: 'Focus: Anthropometric Screening & Progress Tracking',
       image: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=1200&q=80',
+      relevantCourses: 'CPT, Sports Nutrition & Client Screening',
       hotspots: [
-        { title: 'Segmental Analyzer', desc: '8-point tactile electrodes with multi-frequency impedance', top: '50%', left: '60%' }
+        { title: 'Measurement Methods', desc: 'Understanding body composition assessment principles and protocols', top: '50%', left: '60%' }
       ]
     }
   ];
 
-  const [activeTab, setActiveTab] = useState(stations[0].id);
-  const currentStation = stations.find(s => s.id === activeTab) || stations[0];
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  // Auto-slide effect every 6 seconds
+  useEffect(() => {
+    if (!isPlaying) return;
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % stations.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [isPlaying, stations.length]);
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + 1) % stations.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev - 1 + stations.length) % stations.length);
+  };
+
+  const currentStation = stations[currentIndex];
 
   return (
-    <section id="virtual-tour" className="py-24 bg-[#070b16]/35 backdrop-blur-[1px] relative border-t border-slate-800/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="virtual-tour" className="py-24 bg-[#070b16]/40 backdrop-blur-[1px] relative border-t border-slate-800/60 overflow-hidden">
+      {/* Ambient background glows */}
+      <div className="absolute top-1/4 -left-40 w-96 h-96 bg-red-600/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -right-40 w-96 h-96 bg-blue-600/10 rounded-full blur-[140px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <AnimateOnScroll animation="fly-in-up" className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-950/70 border border-blue-800/60 text-blue-400 text-xs font-semibold uppercase tracking-wider mb-4">
+        <AnimateOnScroll animation="fly-in-up" className="text-center max-w-3xl mx-auto mb-12">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-950/70 border border-blue-800/60 text-blue-400 text-xs font-semibold uppercase tracking-wider mb-4 shadow-sm">
             <Compass className="w-3.5 h-3.5 text-[#ef3838]" />
-            Practical Infrastructure Tour
+            PRACTICAL LEARNING EXPERIENCE • ANIMATED GALLERY
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight font-heading">
             Inside SRE Practical Labs
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-400 leading-relaxed">
-            Take a virtual tour through our clinical testing suites, 3D motion analysis rooms, and competition Olympic lifting halls where students build real-world mastery.
+          <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed font-normal">
+            Explore how exercise science connects with practical fitness training through our interactive practical lab gallery. Discover the stations dedicated to biomechanics, strength and conditioning, exercise physiology, and body composition.
           </p>
         </AnimateOnScroll>
 
-        {/* Station Navigation Selector (Single Line) */}
-        <div className="flex justify-center mb-12">
-          <div className="inline-flex items-center p-2 rounded-3xl glass-panel-3d shadow-3d-floating max-w-full overflow-x-auto flex-nowrap gap-2 scrollbar-none">
-            {stations.map((st) => (
-              <button
-                key={st.id}
-                onClick={() => setActiveTab(st.id)}
-                className={`px-4 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-xs sm:text-sm font-black transition-all whitespace-nowrap flex items-center gap-2 flex-shrink-0 ${
-                  activeTab === st.id
-                    ? 'btn-3d-red text-white'
-                    : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
-                }`}
-              >
-                <Eye className="w-4 h-4 flex-shrink-0" />
-                <span className="whitespace-nowrap">{st.category}</span>
-              </button>
-            ))}
+        {/* Gallery Controls Header: Counter, Play/Pause, Next/Prev */}
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-6 px-2">
+          <div className="flex items-center gap-3">
+            <span className="text-xs font-mono font-bold tracking-widest text-slate-400">
+              STATION <span className="text-white text-sm font-black">0{currentIndex + 1}</span> / 0{stations.length}
+            </span>
+            <div className="h-4 w-px bg-slate-800" />
+            <button
+              onClick={() => setIsPlaying(!isPlaying)}
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-300 hover:text-white px-3 py-1.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all"
+              title={isPlaying ? 'Pause Autoplay' : 'Resume Autoplay'}
+            >
+              {isPlaying ? (
+                <>
+                  <Pause className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Autoplay Active</span>
+                </>
+              ) : (
+                <>
+                  <Play className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Resume Gallery</span>
+                </>
+              )}
+            </button>
+          </div>
+
+          {/* Prev / Next Arrows */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={prevSlide}
+              aria-label="Previous station"
+              className="p-2.5 rounded-xl glass-panel-3d text-slate-300 hover:text-white hover:bg-slate-800 transition-all"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button
+              onClick={nextSlide}
+              aria-label="Next station"
+              className="p-2.5 rounded-xl glass-panel-3d text-slate-300 hover:text-white hover:bg-slate-800 transition-all"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
           </div>
         </div>
 
-        {/* Interactive Lab Showcase Viewport with Card3D */}
-        <Card3D glowColor="dual" intensity={7} depth={20} className="rounded-3xl glass-panel-3d overflow-hidden shadow-3d-floating">
+        {/* Main Animated Gallery Viewport with Card3D */}
+        <Card3D glowColor="dual" intensity={6} depth={18} className="rounded-3xl glass-panel-3d overflow-hidden shadow-2xl border border-slate-800">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
             
-            {/* Visual Screen with Interactive Hotspots (7 cols) */}
-            <div className="lg:col-span-7 relative min-h-[380px] sm:min-h-[460px] bg-slate-950 overflow-hidden group">
+            {/* Visual Station Image with Hotspots (7 Cols) */}
+            <div className="lg:col-span-7 relative min-h-[380px] sm:min-h-[480px] bg-slate-950 overflow-hidden group">
               <img
+                key={currentStation.id}
                 src={currentStation.image}
                 alt={currentStation.title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 filter brightness-95"
+                className="w-full h-full object-cover transition-all duration-700 filter brightness-95 group-hover:scale-105 animate-fadeIn"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent pointer-events-none" />
 
-              {/* Interactive Hotspot Indicators */}
+              {/* Hotspots */}
               {currentStation.hotspots.map((spot, i) => (
                 <div
                   key={i}
@@ -173,33 +242,37 @@ export const VirtualTour: React.FC = () => {
                 </div>
               ))}
 
-              {/* Bottom Badge Over Image */}
-              <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center text-xs text-slate-300 bg-slate-950/80 backdrop-blur-md px-4 py-2 rounded-xl border border-slate-800">
-                <span className="flex items-center gap-1.5 font-medium">
-                  <MapPin className="w-3.5 h-3.5 text-[#ef3838]" />
+              {/* Bottom Specs Pill */}
+              <div className="absolute bottom-4 left-4 right-4 flex flex-wrap justify-between items-center gap-2 text-xs text-slate-300 bg-slate-950/85 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-slate-800/80">
+                <span className="flex items-center gap-1.5 font-medium text-white">
+                  <MapPin className="w-3.5 h-3.5 text-[#ef3838] shrink-0" />
                   {currentStation.specs}
                 </span>
-                <span className="text-[11px] text-slate-400">Hover numbers to inspect tech</span>
+                <span className="text-[11px] text-blue-400 font-bold uppercase tracking-wider flex items-center gap-1">
+                  <Sparkles className="w-3 h-3" />
+                  Interactive Lab Station
+                </span>
               </div>
             </div>
 
-            {/* Right: Technical Specs & Curriculum Details (5 cols) */}
-            <div className="lg:col-span-5 p-7 sm:p-9 flex flex-col justify-between space-y-6">
+            {/* Technical Specs & Content (5 Cols) */}
+            <div className="lg:col-span-5 p-7 sm:p-9 flex flex-col justify-between space-y-6 bg-slate-900/40">
               <div>
-                <span className="text-[11px] font-bold text-[#ef3838] uppercase tracking-wider block mb-1">
-                  {currentStation.category}
+                <span className="text-[11px] font-bold text-[#ef3838] uppercase tracking-wider block mb-2">
+                  {currentStation.badgeLabel}
                 </span>
-                <h3 className="text-2xl font-bold text-white font-heading">
+                <h3 className="text-2xl font-black text-white font-heading leading-tight">
                   {currentStation.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mt-3">
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mt-3 font-normal">
                   {currentStation.description}
                 </p>
 
-                {/* Practical Equipment List */}
+                {/* Key Learning Areas */}
                 <div className="mt-6 space-y-2.5">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                    Key Practical Equipment Installed:
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                    <Layers className="w-3.5 h-3.5 text-blue-400" />
+                    KEY PRACTICAL LAB COMPETENCIES:
                   </h4>
                   {currentStation.features.map((feat, idx) => (
                     <div key={idx} className="flex items-start gap-2.5 text-xs text-slate-200">
@@ -210,21 +283,50 @@ export const VirtualTour: React.FC = () => {
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-slate-800 flex items-center justify-between">
+              {/* Bottom Card Action */}
+              <div className="pt-4 border-t border-slate-800 flex items-center justify-between gap-3">
                 <div className="text-xs text-slate-400">
-                  Included in: <strong className="text-white">CPT & CSCS Practicum</strong>
+                  Relevant Courses: <strong className="text-white block sm:inline">{currentStation.relevantCourses}</strong>
                 </div>
                 <a
                   href="#contact"
-                  className="text-xs font-bold text-blue-400 hover:text-blue-300 flex items-center gap-1"
+                  className="btn-3d-red px-4 py-2 rounded-xl text-xs font-bold text-white whitespace-nowrap shadow-md shrink-0"
                 >
-                  Book Campus Visit &rarr;
+                  Inquire Practical Batch
                 </a>
               </div>
             </div>
 
           </div>
         </Card3D>
+
+        {/* Interactive Thumbnail Strip */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8">
+          {stations.map((st, idx) => (
+            <button
+              key={st.id}
+              onClick={() => {
+                setCurrentIndex(idx);
+                setIsPlaying(false);
+              }}
+              className={`p-3 rounded-2xl border text-left transition-all duration-300 flex items-center gap-3 ${
+                currentIndex === idx
+                  ? 'bg-slate-900 border-red-500/70 shadow-lg shadow-red-500/10 scale-[1.02]'
+                  : 'bg-slate-950/60 border-slate-800/80 hover:border-slate-700 opacity-70 hover:opacity-100'
+              }`}
+            >
+              <img
+                src={st.image}
+                alt={st.tabLabel}
+                className="w-12 h-12 rounded-xl object-cover shrink-0 border border-slate-700"
+              />
+              <div className="overflow-hidden">
+                <div className="text-[10px] font-mono font-bold text-red-400 uppercase">0{idx + 1} Station</div>
+                <div className="text-xs font-bold text-white truncate">{st.tabLabel}</div>
+              </div>
+            </button>
+          ))}
+        </div>
 
       </div>
     </section>

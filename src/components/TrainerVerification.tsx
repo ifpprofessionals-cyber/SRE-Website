@@ -28,6 +28,7 @@ export const TrainerVerification: React.FC = () => {
   const [matchedTrainer, setMatchedTrainer] = useState<VerifiedTrainer | null>(FALLBACK_TRAINERS[0]);
   const [isLoadingSheet, setIsLoadingSheet] = useState(false);
   const [sheetLoaded, setSheetLoaded] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
 
   useEffect(() => {
     if (!GOOGLE_SHEET_CSV_URL) return;
@@ -72,10 +73,12 @@ export const TrainerVerification: React.FC = () => {
     setMatchedTrainer(found || null);
   };
 
-  const handleQuickSelect = (id: string) => {
-    setSearchQuery(id);
-    handleSearch(id);
+  const handleQuickSelect = (idOrCert: string) => {
+    setSearchQuery(idOrCert);
+    handleSearch(idOrCert);
   };
+
+  const isVerified = matchedTrainer && matchedTrainer.status === 'ACTIVE VERIFIED';
 
   return (
     <section id="verify-trainer" className="py-24 relative border-t border-slate-800/60 overflow-hidden">
@@ -88,22 +91,22 @@ export const TrainerVerification: React.FC = () => {
         <AnimateOnScroll animation="fly-in-up" className="text-center max-w-3xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel-3d text-blue-300 text-xs font-bold uppercase tracking-wider mb-4 shadow-md">
             <ShieldCheck className="w-4 h-4 text-[#ef3838]" />
-            Live Credential Registry
+            SRE FITNESS ACADEMY • CREDENTIAL VERIFICATION
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight font-heading drop-shadow-md">
             Verify Trainer
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed font-normal">
-            Ensure your coach is legitimately certified in scientific biomechanics and client safety. Employers, gym directors, and private clients can verify SRE credentials in real time.
+            Verify a fitness professional&apos;s credentials issued or recorded by SRE Fitness Academy. Check available certificate details and credential status to make more informed decisions when choosing a trainer.
           </p>
 
-          {/* Google Sheets Sync Indicator */}
+          {/* Verification Portal Status Badge */}
           <div className="mt-5 inline-flex items-center gap-2 text-xs px-4 py-1.5 rounded-full glass-panel-3d text-slate-300 shadow-sm">
             <FileSpreadsheet className="w-4 h-4 text-emerald-400" />
             <span className="font-medium">
               {sheetLoaded
-                ? `Live Synced with Institutional Google Sheet (${trainers.length} Records)`
-                : `Instant Database Verification Active (${trainers.length} Registered Trainers)`}
+                ? `Credential Verification Portal (${trainers.length} Records Synced)`
+                : `Credential Verification Portal`}
             </span>
             {isLoadingSheet && <RefreshCw className="w-3.5 h-3.5 text-blue-400 animate-spin" />}
           </div>
@@ -125,7 +128,7 @@ export const TrainerVerification: React.FC = () => {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Enter Trainer ID (e.g. SRE-2024-1082) or Full Name..."
+                  placeholder="Enter Certificate ID or Trainer Name"
                   className="w-full pl-12 pr-4 py-4 bg-slate-950/80 rounded-2xl border border-slate-700/80 text-sm sm:text-base text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 transition-colors shadow-inner font-medium"
                 />
               </div>
@@ -134,24 +137,48 @@ export const TrainerVerification: React.FC = () => {
                 className="btn-3d-red px-8 py-4 rounded-2xl text-sm font-black text-white shrink-0 flex items-center justify-center gap-2"
               >
                 <Search className="w-4 h-4 text-white" />
-                <span>Verify Credential</span>
+                <span>Verify Certificate</span>
               </button>
             </form>
 
-            {/* Quick Sample Links */}
+            {/* Example Searches */}
             <div className="mt-4 pt-3.5 border-t border-slate-800 flex flex-wrap items-center gap-2 text-xs text-slate-400 px-2">
-              <span className="font-bold text-slate-300">Quick Test Records:</span>
-              {trainers.slice(0, 3).map((t) => (
-                <button
-                  key={t.id}
-                  type="button"
-                  onClick={() => handleQuickSelect(t.id)}
-                  className="px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-blue-300 font-semibold transition-colors shadow-sm"
-                >
-                  {t.id} ({t.name.split(' ')[0]})
-                </button>
-              ))}
+              <span className="font-bold text-slate-300">Example Searches:</span>
+              <button
+                type="button"
+                onClick={() => {
+                  const cert = trainers[0]?.certificateNo || 'SRE-CPT-2024-001082';
+                  handleQuickSelect(cert);
+                }}
+                className="px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-blue-300 font-semibold transition-colors shadow-sm"
+              >
+                Enter a certificate ID
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  const name = trainers[0]?.name || 'Vikramaditya Roy';
+                  handleQuickSelect(name);
+                }}
+                className="px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-blue-300 font-semibold transition-colors shadow-sm"
+              >
+                Search by trainer name
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowHelp(!showHelp)}
+                className="px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-semibold transition-colors shadow-sm"
+              >
+                View verification help
+              </button>
             </div>
+
+            {showHelp && (
+              <div className="mt-3 p-3.5 rounded-2xl bg-slate-900/90 border border-slate-700 text-xs text-slate-300 leading-relaxed">
+                <strong className="text-white block mb-1">Verification Assistance:</strong>
+                Enter the exact Certificate ID (e.g. SRE-CPT-2024-001082) or the trainer&apos;s full legal name as recorded. If you require manual institutional verification or encounter any issues, please contact the SRE Fitness Academy credential desk.
+              </div>
+            )}
           </Card3D>
         </AnimateOnScroll>
 
@@ -168,14 +195,40 @@ export const TrainerVerification: React.FC = () => {
 
                 {/* Status Header Bar */}
                 <div className="flex flex-wrap justify-between items-center gap-4 pb-6 border-b border-slate-800">
-                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-950/90 border border-blue-500/60 text-blue-300 text-xs font-black tracking-wider shadow-sm">
-                    <CheckCircle2 className="w-4 h-4 text-blue-400" />
-                    AUTHENTICATED RECORD: {matchedTrainer.status}
-                  </div>
+                  {isVerified ? (
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-950/90 border border-emerald-500/60 text-emerald-300 text-xs font-black tracking-wider shadow-sm">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                      CREDENTIAL STATUS: VERIFIED
+                    </div>
+                  ) : (
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-950/90 border border-amber-500/60 text-amber-300 text-xs font-black tracking-wider shadow-sm">
+                      <AlertCircle className="w-4 h-4 text-amber-400" />
+                      CREDENTIAL STATUS: REQUIRES ATTENTION
+                    </div>
+                  )}
                   <div className="text-xs text-slate-400 font-mono">
-                    SRE Central Academic Registry • Timestamp Verified
+                    SRE Fitness Academy • Credential Record
                   </div>
                 </div>
+
+                {/* Search Result Outcome Message Banner */}
+                {isVerified ? (
+                  <div className="mt-5 p-3.5 rounded-2xl bg-emerald-950/40 border border-emerald-500/30 flex items-start gap-2.5 text-xs text-emerald-200">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                    <div>
+                      <span className="font-bold text-white text-xs block">Credential found and valid</span>
+                      The submitted details match a credential in SRE Fitness Academy&apos;s records. Review the qualification, issue date, and status shown below.
+                    </div>
+                  </div>
+                ) : (
+                  <div className="mt-5 p-3.5 rounded-2xl bg-amber-950/40 border border-amber-500/30 flex items-start gap-2.5 text-xs text-amber-200">
+                    <AlertCircle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                    <div>
+                      <span className="font-bold text-white text-xs block">Credential status requires attention</span>
+                      A matching record was found, but the credential is marked as expired, inactive, suspended, or otherwise restricted. Review the status displayed in the official record.
+                    </div>
+                  </div>
+                )}
 
                 {/* Trainer Profile Card Layout */}
                 <div className="pt-7 grid grid-cols-1 md:grid-cols-3 gap-7 items-start">
@@ -183,7 +236,7 @@ export const TrainerVerification: React.FC = () => {
                   <div className="flex flex-col items-center text-center p-5 rounded-3xl bg-slate-950/80 border border-slate-800 shadow-inner">
                     <div className="relative">
                       <img
-                        src={matchedTrainer.avatar}
+                        src={matchedTrainer.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80'}
                         alt={matchedTrainer.name}
                         className="w-32 h-32 rounded-3xl object-cover border-2 border-[#2575dc] shadow-xl"
                       />
@@ -192,11 +245,15 @@ export const TrainerVerification: React.FC = () => {
                       </div>
                     </div>
                     <h3 className="text-xl font-black text-white mt-4 font-heading">{matchedTrainer.name}</h3>
-                    <p className="text-xs text-[#ef3838] font-mono mt-1 font-black">{matchedTrainer.id}</p>
-                    <p className="text-xs text-slate-300 flex items-center gap-1.5 mt-2 font-medium">
-                      <MapPin className="w-3.5 h-3.5 text-slate-500" />
-                      {matchedTrainer.location}
+                    <p className="text-xs text-[#ef3838] font-mono mt-1 font-black">
+                      Certificate ID: {matchedTrainer.certificateNo || matchedTrainer.id}
                     </p>
+                    {matchedTrainer.location && (
+                      <p className="text-xs text-slate-300 flex items-center gap-1.5 mt-2 font-medium">
+                        <MapPin className="w-3.5 h-3.5 text-slate-500" />
+                        {matchedTrainer.location}
+                      </p>
+                    )}
                   </div>
 
                   {/* Academic Credentials & Details */}
@@ -212,44 +269,44 @@ export const TrainerVerification: React.FC = () => {
 
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
                       <div className="p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800 shadow-inner">
-                        <div className="text-[10px] text-slate-400 font-bold uppercase">Certificate No.</div>
+                        <div className="text-[10px] text-slate-400 font-bold uppercase">Certificate ID</div>
                         <div className="text-xs sm:text-sm font-bold text-white font-mono mt-0.5">
-                          {matchedTrainer.certificateNo}
+                          {matchedTrainer.certificateNo || matchedTrainer.id}
                         </div>
                       </div>
 
                       <div className="p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800 shadow-inner">
-                        <div className="text-[10px] text-slate-400 font-bold uppercase">Issue Date</div>
+                        <div className="text-[10px] text-slate-400 font-bold uppercase">Date Issued</div>
                         <div className="text-xs sm:text-sm font-bold text-white mt-0.5">
                           {matchedTrainer.issueDate}
                         </div>
                       </div>
 
                       <div className="p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800 shadow-inner">
-                        <div className="text-[10px] text-slate-400 font-bold uppercase">Valid Through</div>
+                        <div className="text-[10px] text-slate-400 font-bold uppercase">Validity</div>
                         <div className="text-xs sm:text-sm font-bold text-[#2575dc] mt-0.5">
-                          {matchedTrainer.validThrough}
+                          {matchedTrainer.validThrough || 'No expiry specified'}
                         </div>
                       </div>
 
                       <div className="p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800 shadow-inner">
-                        <div className="text-[10px] text-slate-400 font-bold uppercase">Exam Grade</div>
+                        <div className="text-[10px] text-slate-400 font-bold uppercase">Assessment Status</div>
                         <div className="text-xs sm:text-sm font-bold text-white mt-0.5">
-                          {matchedTrainer.grade}
+                          {matchedTrainer.grade || 'Passed / Completed'}
                         </div>
                       </div>
 
                       <div className="p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800 shadow-inner">
-                        <div className="text-[10px] text-slate-400 font-bold uppercase">Practicum Lab</div>
+                        <div className="text-[10px] text-slate-400 font-bold uppercase">Practical Requirement</div>
                         <div className="text-xs sm:text-sm font-bold text-white mt-0.5">
-                          {matchedTrainer.practicumHours} Hours
+                          {matchedTrainer.practicumHours ? `${matchedTrainer.practicumHours}` : 'Completed'}
                         </div>
                       </div>
 
                       <div className="p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800 shadow-inner">
-                        <div className="text-[10px] text-slate-400 font-bold uppercase">Life Support</div>
+                        <div className="text-[10px] text-slate-400 font-bold uppercase">Additional Credentials</div>
                         <div className="text-xs sm:text-sm font-bold text-emerald-400 mt-0.5">
-                          CPR/AED Active
+                          {matchedTrainer.additionalCredentials || 'Not Available'}
                         </div>
                       </div>
                     </div>
@@ -273,16 +330,16 @@ export const TrainerVerification: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Bottom Guarantee Banner */}
+                {/* Bottom Source Banner */}
                 <div className="mt-7 pt-4 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-slate-400">
                   <div className="flex items-center gap-2">
                     <FileCheck2 className="w-4 h-4 text-blue-400" />
-                    <span>Encrypted Cryptographic Ledger ID: SHA256-SRE-8891-VERIFIED</span>
+                    <span>Verification Source: SRE Fitness Academy Credential Records</span>
                   </div>
-                  <div className="flex items-center gap-2 text-blue-400 font-bold">
+                  <a href="#verify-trainer" className="flex items-center gap-2 text-blue-400 font-bold hover:text-blue-300">
                     <QrCode className="w-4 h-4 text-[#ef3838]" />
-                    <span>Scan to verify via Mobile App</span>
-                  </div>
+                    <span>Verify Using Certificate ID</span>
+                  </a>
                 </div>
 
               </Card3D>
@@ -292,24 +349,27 @@ export const TrainerVerification: React.FC = () => {
               <div className="w-14 h-14 rounded-full bg-red-500/10 border border-red-500/40 flex items-center justify-center text-red-400 mx-auto mb-4">
                 <AlertCircle className="w-7 h-7" />
               </div>
-              <h3 className="text-xl font-bold text-white font-heading">No Certified Record Found</h3>
+              <h3 className="text-xl font-bold text-white font-heading">No matching record</h3>
               <p className="text-slate-300 text-sm mt-2 leading-relaxed">
-                We could not locate any active certification matching &ldquo;<span className="text-white font-bold">{searchQuery}</span>&rdquo;.
+                We could not find a matching credential. Check the certificate ID or trainer name and try again. If you need assistance, contact SRE Fitness Academy.
               </p>
               <div className="mt-6 flex justify-center gap-3">
                 <button
                   type="button"
-                  onClick={() => handleQuickSelect('SRE-2024-1082')}
+                  onClick={() => {
+                    const sample = trainers[0]?.certificateNo || 'SRE-CPT-2024-001082';
+                    handleQuickSelect(sample);
+                  }}
                   className="btn-3d-red px-5 py-2.5 rounded-xl text-xs font-bold text-white"
                 >
-                  Load Sample Active Record
+                  Try Example Search
                 </button>
               </div>
             </AnimateOnScroll>
           ) : null}
         </div>
 
-        {/* 3 Verification Guarantee Pillars in 3D */}
+        {/* 3 Verification Information Cards in 3D */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           <AnimateOnScroll animation="fly-in-up" delay={50}>
             <Card3D glowColor="red" intensity={12} depth={18} className="p-7 rounded-3xl glass-panel-3d shadow-xl h-full">
@@ -318,7 +378,7 @@ export const TrainerVerification: React.FC = () => {
                 For Fitness Seekers & Clients
               </h4>
               <p className="text-xs text-slate-300 mt-2.5 leading-relaxed font-medium">
-                Never place your spinal or metabolic health in the hands of unverified trainers. Ensure your coach is listed on the official SRE active register.
+                Check a trainer&apos;s recorded SRE Fitness Academy credentials before making your decision. Review the qualification and verification status, and ask about experience and services relevant to your fitness goals.
               </p>
             </Card3D>
           </AnimateOnScroll>
@@ -327,10 +387,10 @@ export const TrainerVerification: React.FC = () => {
             <Card3D glowColor="blue" intensity={12} depth={18} className="p-7 rounded-3xl glass-panel-3d shadow-xl h-full">
               <h4 className="font-bold text-white text-base font-heading flex items-center gap-2">
                 <Award className="w-5 h-5 text-[#2575dc]" />
-                For Gym Owners & Managers
+                For Gym Owners & Employers
               </h4>
               <p className="text-xs text-slate-300 mt-2.5 leading-relaxed font-medium">
-                Verify prospective job applicants directly during hiring interviews to maintain your club’s liability safety and training reputation.
+                Use the verification portal to check credentials recorded by SRE Fitness Academy when evaluating trainers. Verify additional qualifications, experience, references, and role-specific requirements separately.
               </p>
             </Card3D>
           </AnimateOnScroll>
@@ -339,10 +399,10 @@ export const TrainerVerification: React.FC = () => {
             <Card3D glowColor="red" intensity={12} depth={18} className="p-7 rounded-3xl glass-panel-3d shadow-xl h-full">
               <h4 className="font-bold text-white text-base font-heading flex items-center gap-2">
                 <ShieldCheck className="w-5 h-5 text-[#ef3838]" />
-                Anti-Fraud Guarantee
+                Credential Verification & Trust
               </h4>
               <p className="text-xs text-slate-300 mt-2.5 leading-relaxed font-medium">
-                Every SRE certificate carries a randomized 128-bit verification seal and dual-factor institutional digital signature preventing forgery.
+                Verification results are based on the records available in the SRE Fitness Academy system. A matching record confirms the recorded credential details; it does not independently guarantee a trainer&apos;s identity, competence, conduct, or current professional standing.
               </p>
             </Card3D>
           </AnimateOnScroll>

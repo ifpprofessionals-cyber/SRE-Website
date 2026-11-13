@@ -8,7 +8,8 @@ import {
   BookOpen, 
   CheckCircle2, 
   Award,
-  Download
+  Download,
+  Languages
 } from 'lucide-react';
 import { COURSES_DATA, type Course } from '../data/coursesData';
 import { CourseModal } from './CourseModal';
@@ -25,11 +26,11 @@ export const Courses: React.FC<CoursesProps> = ({ onSelectCourseForAdmission, on
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
 
   const categories = [
-    { id: 'all', label: 'All Certifications' },
-    { id: 'foundation', label: 'Foundational CPT' },
+    { id: 'all', label: 'All Courses' },
+    { id: 'personal-training', label: 'Personal Training' },
     { id: 'nutrition', label: 'Sports Nutrition' },
-    { id: 'advanced', label: 'High Performance CSCS' },
-    { id: 'rehab', label: 'Clinical Rehab' },
+    { id: 'strength', label: 'Strength & Conditioning' },
+    { id: 'special-populations', label: 'Corrective Exercise' },
   ];
 
   const filteredCourses = activeCategory === 'all'
@@ -55,13 +56,13 @@ export const Courses: React.FC<CoursesProps> = ({ onSelectCourseForAdmission, on
         <AnimateOnScroll animation="fly-in-up" className="text-center max-w-3xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel-3d text-blue-400 text-xs font-bold uppercase tracking-wider mb-4 shadow-md">
             <GraduationCap className="w-4 h-4 text-[#ef3838]" />
-            Accredited Academic Programs
+            PROFESSIONAL FITNESS EDUCATION
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight font-heading drop-shadow-md">
-            Globally Recognized Professional Certifications
+            Professional Courses in Fitness & Sports Science
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed font-normal">
-            Engineered to exceed national and international vocational standards. Every course includes extensive practical floor labs, biomechanical analysis workshops, and direct career placement assistance.
+            Develop your expertise through structured fitness education built around exercise science, practical application, and professional development. Explore programs designed to strengthen your knowledge of personal training, sports nutrition, strength and conditioning, corrective exercise, and athletic performance.
           </p>
 
           {/* Download Full Prospectus 3D CTA Pill */}
@@ -73,7 +74,7 @@ export const Courses: React.FC<CoursesProps> = ({ onSelectCourseForAdmission, on
                 className="btn-3d-red px-6 py-3 rounded-2xl text-xs sm:text-sm font-black text-white flex items-center gap-2.5 tracking-wide shadow-lg"
               >
                 <Download className="w-4 h-4 text-white" />
-                <span>Download Complete 2026 Academic Catalog (PDF)</span>
+                <span>Download Course Catalogue (PDF)</span>
               </button>
             </div>
           )}
@@ -109,14 +110,22 @@ export const Courses: React.FC<CoursesProps> = ({ onSelectCourseForAdmission, on
                 }`}
               >
                 <div>
-                  <div className="flex justify-between items-start gap-2 mb-3.5">
-                    <span className="text-[11px] font-black tracking-wider uppercase bg-blue-950/90 text-blue-300 border border-blue-800/80 px-3 py-1 rounded-xl shadow-sm">
-                      {course.badge}
-                    </span>
+                  <div className="flex flex-wrap justify-between items-start gap-2 mb-3.5">
+                    {course.status === 'active' ? (
+                      <span className="text-[11px] font-black tracking-wider uppercase bg-emerald-950/90 text-emerald-300 border border-emerald-600/60 px-3 py-1 rounded-xl shadow-sm flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        ADMISSIONS ACTIVE
+                      </span>
+                    ) : (
+                      <span className="text-[11px] font-black tracking-wider uppercase bg-amber-950/70 text-amber-300 border border-amber-600/50 px-3 py-1 rounded-xl shadow-sm">
+                        COMING SOON
+                      </span>
+                    )}
+
                     {course.popular && (
                       <span className="text-[11px] font-black uppercase tracking-wider bg-red-500/20 text-red-300 border border-red-500/40 px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
                         <Sparkles className="w-3.5 h-3.5 text-red-400" />
-                        Popular Track
+                        FLAGSHIP CERTIFICATION
                       </span>
                     )}
                   </div>
@@ -124,6 +133,19 @@ export const Courses: React.FC<CoursesProps> = ({ onSelectCourseForAdmission, on
                   <h3 className="text-xl font-black text-white group-hover:text-blue-300 transition-colors font-heading leading-snug">
                     {course.title}
                   </h3>
+
+                  {/* Multilingual Highlight for Active CPT */}
+                  {course.languages && course.languages.length > 0 && (
+                    <div className="mt-2.5 p-2.5 rounded-xl bg-blue-950/50 border border-blue-800/60 flex items-center gap-2 text-xs text-blue-200">
+                      <Languages className="w-4 h-4 text-blue-400 shrink-0" />
+                      <div>
+                        <span className="font-bold text-white">Delivered in 4 Languages:</span>
+                        <div className="text-[11px] text-blue-300 mt-0.5 font-medium">
+                          {course.languages.join(' • ')}
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
                   <p className="mt-3 text-slate-300 text-xs sm:text-sm line-clamp-3 leading-relaxed font-normal">
                     {course.description}
@@ -141,7 +163,7 @@ export const Courses: React.FC<CoursesProps> = ({ onSelectCourseForAdmission, on
                     </div>
                     <div className="flex items-center gap-2">
                       <Award className="w-4 h-4 text-[#ef3838] shrink-0" />
-                      <span><strong>Accreditation:</strong> {course.credits}</span>
+                      <span><strong>Assessment:</strong> {course.assessment}</span>
                     </div>
                   </div>
 
@@ -168,16 +190,26 @@ export const Courses: React.FC<CoursesProps> = ({ onSelectCourseForAdmission, on
                     className="text-xs font-bold text-blue-400 hover:text-blue-300 flex items-center gap-1 transition-colors"
                   >
                     <BookOpen className="w-3.5 h-3.5" />
-                    <span>Inspect Syllabus</span>
+                    <span>Course Details</span>
                   </button>
 
-                  <button
-                    onClick={() => handleEnrollClick(course.title)}
-                    className="btn-3d-red px-5 py-2.5 rounded-xl text-xs font-black text-white flex items-center gap-1.5 shadow-md"
-                  >
-                    <span>Apply Now</span>
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </button>
+                  {course.status === 'active' ? (
+                    <button
+                      onClick={() => handleEnrollClick(course.title)}
+                      className="btn-3d-red px-5 py-2.5 rounded-xl text-xs font-black text-white flex items-center gap-1.5 shadow-md"
+                    >
+                      <span>Enroll in CPT</span>
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handleEnrollClick(`${course.title} (Pre-Registration Inquiry)`)}
+                      className="btn-3d-blue px-4 py-2.5 rounded-xl text-xs font-bold text-white flex items-center gap-1.5 shadow-md opacity-90 hover:opacity-100"
+                    >
+                      <span>Pre-Register</span>
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </button>
+                  )}
                 </div>
               </Card3D>
             </AnimateOnScroll>
@@ -189,20 +221,20 @@ export const Courses: React.FC<CoursesProps> = ({ onSelectCourseForAdmission, on
           <Card3D glowColor="dual" intensity={8} depth={18} className="p-8 sm:p-10 rounded-3xl glass-panel-3d flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl">
             <div className="max-w-2xl">
               <span className="text-xs font-bold text-red-400 uppercase tracking-widest bg-red-950 px-3 py-1 rounded-lg border border-red-800/80">
-                Institutional Partnerships
+                FOR GYMS, ACADEMIES & FITNESS ORGANIZATIONS
               </span>
               <h4 className="text-xl sm:text-2xl font-black text-white mt-3 font-heading">
-                Looking to certify your entire gym chain or coaching staff?
+                Build Your Team's Fitness Knowledge with SRE
               </h4>
-              <p className="text-xs sm:text-sm text-slate-300 mt-2 font-normal">
-                We provide corporate training packages, custom practical audit workshops, and bulk on-premise examinations for health clubs and athletic federations.
+              <p className="text-xs sm:text-sm text-slate-300 mt-2 font-normal leading-relaxed">
+                Explore learning and professional development opportunities for fitness teams, gym staff, sports academies, and fitness organizations. Contact SRE Fitness Academy to discuss training requirements and potential institutional learning programs.
               </p>
             </div>
             <button
               onClick={() => handleEnrollClick('Institutional / Corporate Training')}
               className="btn-3d-blue px-7 py-3.5 rounded-2xl text-xs sm:text-sm font-black text-white transition-all shrink-0 shadow-lg"
             >
-              Inquire for Enterprise Training
+              Discuss Institutional Training
             </button>
           </Card3D>
         </AnimateOnScroll>

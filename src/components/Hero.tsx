@@ -9,7 +9,6 @@ import {
   RotateCcw, 
   ShieldCheck, 
   BookOpen, 
-  Users, 
   GraduationCap, 
   Video,
   Download,
@@ -30,25 +29,25 @@ export const Hero: React.FC = () => {
 
   const previewSlides = [
     {
+      title: "Understanding Strength & Power Development",
+      caption: "Explore how training intensity, movement velocity, exercise technique, and force production contribute to strength and athletic performance.",
+      tag: "Athletic Performance",
+      stats: { metric: "PERFORMANCE CONCEPT", value: "Strength & Power", status: "Training Science" },
+      color: "from-rose-500 to-[#2575dc]"
+    },
+    {
       title: "Biomechanics & Kinesiology Lab",
-      caption: "Real-time force vector tracking, moment arms, and kinetic chain assessments.",
-      tag: "Lab Practicum",
-      stats: { metric: "Moment Arm", value: "32.4 cm", status: "Optimal Load" },
+      caption: "Applied force vector analysis, moment arms, and kinetic chain movement mechanics.",
+      tag: "Biomechanics Lab",
+      stats: { metric: "LEARNING FOCUS", value: "Movement Vectors", status: "Evidence-Based" },
       color: "from-[#ef3838] to-[#2575dc]"
     },
     {
       title: "Clinical Exercise Physiology",
-      caption: "Metabolic expenditure diagnostics, VO2 Max calibration & fuel partitioning.",
-      tag: "Clinical Science",
-      stats: { metric: "VO2 Sub-Max", value: "54.2 mL/kg", status: "Aerobic Zone" },
+      caption: "Metabolic conditioning principles, cardiovascular adaptations, and exercise science.",
+      tag: "Exercise Physiology",
+      stats: { metric: "PHYSIOLOGY FOCUS", value: "Aerobic Capacity", status: "Applied Science" },
       color: "from-[#2575dc] to-indigo-400"
-    },
-    {
-      title: "Elite Olympic Strength Coaching",
-      caption: "Velocity-based training (VBT), barbell displacement curves & rate of force.",
-      tag: "Athletic Performance",
-      stats: { metric: "Mean Velocity", value: "0.82 m/s", status: "Speed-Strength" },
-      color: "from-rose-500 to-[#2575dc]"
     }
   ];
 
@@ -110,8 +109,9 @@ export const Hero: React.FC = () => {
         <AnimateOnScroll animation="fly-in-down" delay={50} className="flex justify-center mb-8">
           <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full glass-panel-3d text-blue-300 text-xs sm:text-sm font-semibold shadow-3d-floating transform hover:-translate-y-1 transition-transform">
             <span className="flex h-2.5 w-2.5 rounded-full bg-red-500 animate-ping" />
-            <span className="font-extrabold text-white tracking-wide">2026 Academic Admissions Open:</span>
-            <span className="text-slate-300">Pan-India Biomechanics Practicum Batches</span>
+            <span className="font-extrabold text-white tracking-wide">2026 Admissions Open</span>
+            <span className="text-slate-400 font-normal">|</span>
+            <span className="text-slate-300">Build Your Career in Fitness Science</span>
             <span className="text-[#ef3838] font-bold text-sm">→</span>
           </div>
         </AnimateOnScroll>
@@ -121,19 +121,19 @@ export const Hero: React.FC = () => {
           <AnimateOnScroll animation="zoom-in" delay={120}>
             <div className="inline-flex items-center gap-2 mb-3 text-xs uppercase tracking-widest font-black text-slate-400">
               <Dumbbell className="w-4 h-4 text-[#ef3838]" />
-              Kinesiology • Exercise Physiology • Athletic Conditioning
+              EXERCISE SCIENCE • STRENGTH & CONDITIONING • FITNESS EDUCATION
             </div>
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.12] font-heading drop-shadow-xl">
-              Elevating Fitness Coaching into an{' '}
+              Turn Your Passion for Fitness into{' '}
               <span className="bg-gradient-to-r from-[#ef3838] via-rose-400 to-[#2575dc] bg-clip-text text-transparent">
-                Exact Science
+                Scientific Expertise
               </span>
             </h1>
           </AnimateOnScroll>
 
           <AnimateOnScroll animation="fly-in-up" delay={200}>
             <p className="mt-6 text-base sm:text-lg md:text-xl text-slate-300 leading-relaxed max-w-3xl mx-auto font-normal drop-shadow-md">
-              SRE Fitness Academy is India’s premier fitness sciences institution. We train and certify evidence-based personal trainers, sports nutritionists, and high-performance strength coaches through university-grade kinesiology and clinical lab practicums.
+              SRE Fitness Academy empowers aspiring and practicing fitness professionals through science-based education, practical learning, and evidence-informed training principles. Build the knowledge and coaching skills to grow in the evolving world of fitness and human performance.
             </p>
           </AnimateOnScroll>
 
@@ -145,7 +145,7 @@ export const Hero: React.FC = () => {
                 className="btn-3d-red px-8 py-4 rounded-2xl font-black text-sm sm:text-base text-white flex items-center gap-2.5 tracking-wide"
               >
                 <GraduationCap className="w-5 h-5 text-white" />
-                <span>Explore Academic Programs</span>
+                <span>Explore Our Courses</span>
               </a>
               
               <a
@@ -153,7 +153,7 @@ export const Hero: React.FC = () => {
                 className="btn-3d-blue px-7 py-4 rounded-2xl font-bold text-sm sm:text-base text-white flex items-center gap-2.5 tracking-wide"
               >
                 <ShieldCheck className="w-5 h-5 text-white" />
-                <span>Verify Coach Credential</span>
+                <span>Verify Credentials</span>
               </a>
 
               <a
@@ -161,7 +161,7 @@ export const Hero: React.FC = () => {
                 className="px-6 py-4 rounded-2xl font-bold text-sm sm:text-base glass-panel-3d transition-all flex items-center gap-2 transform hover:-translate-y-1"
               >
                 <Download className="w-4 h-4 text-[#ef3838]" />
-                <span>Free Science Tools</span>
+                <span>Explore Free Tools</span>
               </a>
             </div>
           </AnimateOnScroll>
@@ -187,15 +187,15 @@ export const Hero: React.FC = () => {
                   <div className="flex items-center gap-2">
                     <Video className="w-4 h-4 text-blue-400" />
                     <span className="text-xs font-bold text-slate-200 tracking-wider">
-                      3D HUD TELEMETRY • LIVE PRACTICUM STAGE
+                      FITNESS SCIENCE • PRACTICAL LEARNING EXPERIENCE
                     </span>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="inline-flex items-center gap-1.5 text-[11px] font-bold bg-red-950 text-red-300 border border-red-800/80 px-3 py-1 rounded-full shadow-sm">
-                    <span className="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
-                    Demo Video Active
+                  <span className="inline-flex items-center gap-1.5 text-[11px] font-bold bg-blue-950 text-blue-300 border border-blue-800/80 px-3 py-1 rounded-full shadow-sm">
+                    <span className="w-2 h-2 rounded-full bg-blue-400 animate-ping"></span>
+                    Learning Preview
                   </span>
                 </div>
               </div>
@@ -223,10 +223,10 @@ export const Hero: React.FC = () => {
                   <div className="animate-fadeIn transition-all duration-500 max-w-xl">
                     <div className="flex items-center gap-2">
                       <span className="text-xs uppercase tracking-widest font-black text-blue-300 bg-blue-950/95 px-3 py-1 rounded-md border border-blue-500/50 backdrop-blur-md shadow-md">
-                        Slide Sequence #{activeSlideTab + 1}: {previewSlides[activeSlideTab].tag}
+                        FEATURED TOPIC: {previewSlides[activeSlideTab].tag.toUpperCase()}
                       </span>
                       <span className="text-[10px] font-bold text-slate-300 bg-slate-900/90 px-2 py-0.5 rounded border border-slate-700 backdrop-blur-md">
-                        Auto-Transition
+                        PRACTICAL LEARNING
                       </span>
                     </div>
 
@@ -331,12 +331,16 @@ export const Hero: React.FC = () => {
           <AnimateOnScroll animation="swipe-in-left" delay={50}>
             <Card3D glowColor="blue" intensity={12} depth={18} className="p-6 rounded-3xl glass-panel-3d shadow-xl h-full">
               <div className="flex items-center gap-3.5">
-                <div className="p-3 rounded-2xl bg-blue-500/15 text-[#2575dc] border border-blue-500/30">
-                  <Users className="w-7 h-7" />
+                <div className="p-3 rounded-2xl bg-blue-500/15 text-[#2575dc] border border-blue-500/30 shrink-0">
+                  <GraduationCap className="w-7 h-7" />
                 </div>
                 <div>
-                  <div className="text-3xl font-black text-white font-heading">15,000+</div>
-                  <div className="text-xs text-slate-300 font-semibold mt-0.5">Certified Alumni Worldwide</div>
+                  <div className="text-sm sm:text-base font-black text-white font-heading tracking-wide leading-tight">
+                    SCIENCE-LED EDUCATION
+                  </div>
+                  <div className="text-xs text-slate-300 font-medium mt-1 leading-snug">
+                    Building Stronger Fitness Foundations
+                  </div>
                 </div>
               </div>
             </Card3D>
@@ -345,12 +349,16 @@ export const Hero: React.FC = () => {
           <AnimateOnScroll animation="fly-in-up" delay={150}>
             <Card3D glowColor="red" intensity={12} depth={18} className="p-6 rounded-3xl glass-panel-3d shadow-xl h-full">
               <div className="flex items-center gap-3.5">
-                <div className="p-3 rounded-2xl bg-red-500/15 text-[#ef3838] border border-red-500/30">
+                <div className="p-3 rounded-2xl bg-red-500/15 text-[#ef3838] border border-red-500/30 shrink-0">
                   <Award className="w-7 h-7" />
                 </div>
                 <div>
-                  <div className="text-3xl font-black text-white font-heading">98.4%</div>
-                  <div className="text-xs text-slate-300 font-semibold mt-0.5">Industry Placement Rate</div>
+                  <div className="text-sm sm:text-base font-black text-white font-heading tracking-wide leading-tight">
+                    CAREER DEVELOPMENT
+                  </div>
+                  <div className="text-xs text-slate-300 font-medium mt-1 leading-snug">
+                    Preparing for Professional Opportunities
+                  </div>
                 </div>
               </div>
             </Card3D>
@@ -359,12 +367,16 @@ export const Hero: React.FC = () => {
           <AnimateOnScroll animation="fly-in-up" delay={250}>
             <Card3D glowColor="blue" intensity={12} depth={18} className="p-6 rounded-3xl glass-panel-3d shadow-xl h-full">
               <div className="flex items-center gap-3.5">
-                <div className="p-3 rounded-2xl bg-blue-500/15 text-[#2575dc] border border-blue-500/30">
+                <div className="p-3 rounded-2xl bg-blue-500/15 text-[#2575dc] border border-blue-500/30 shrink-0">
                   <BookOpen className="w-7 h-7" />
                 </div>
                 <div>
-                  <div className="text-3xl font-black text-white font-heading">160+ Hrs</div>
-                  <div className="text-xs text-slate-300 font-semibold mt-0.5">Biomechanics Floor Practicum</div>
+                  <div className="text-sm sm:text-base font-black text-white font-heading tracking-wide leading-tight">
+                    PRACTICAL LEARNING
+                  </div>
+                  <div className="text-xs text-slate-300 font-medium mt-1 leading-snug">
+                    Connecting Theory with Application
+                  </div>
                 </div>
               </div>
             </Card3D>
@@ -373,12 +385,16 @@ export const Hero: React.FC = () => {
           <AnimateOnScroll animation="swipe-in-right" delay={350}>
             <Card3D glowColor="red" intensity={12} depth={18} className="p-6 rounded-3xl glass-panel-3d shadow-xl h-full">
               <div className="flex items-center gap-3.5">
-                <div className="p-3 rounded-2xl bg-red-500/15 text-[#ef3838] border border-red-500/30">
+                <div className="p-3 rounded-2xl bg-red-500/15 text-[#ef3838] border border-red-500/30 shrink-0">
                   <CheckCircle2 className="w-7 h-7" />
                 </div>
                 <div>
-                  <div className="text-3xl font-black text-white font-heading">ISO & REPs</div>
-                  <div className="text-xs text-slate-300 font-semibold mt-0.5">Global Reciprocity Aligned</div>
+                  <div className="text-sm sm:text-base font-black text-white font-heading tracking-wide leading-tight">
+                    PROFESSIONAL STANDARDS
+                  </div>
+                  <div className="text-xs text-slate-300 font-medium mt-1 leading-snug">
+                    Learning with Responsibility and Purpose
+                  </div>
                 </div>
               </div>
             </Card3D>
