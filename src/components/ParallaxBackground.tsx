@@ -84,7 +84,7 @@ export const ParallaxBackground: React.FC = () => {
       >
         <video
           ref={videoRef}
-          src="/videos/demo-slide.mp4"
+          src="/videos/sre-academy-bg.mp4"
           muted
           playsInline
           preload="auto"

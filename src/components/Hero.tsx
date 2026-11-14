@@ -205,7 +205,7 @@ export const Hero: React.FC = () => {
                 
                 <video
                   ref={videoRef}
-                  src="/videos/demo-slide.mp4"
+                  src="/videos/sre-academy-bg.mp4"
                   className="absolute inset-0 w-full h-full object-cover opacity-85"
                   loop
                   muted={isMuted}
